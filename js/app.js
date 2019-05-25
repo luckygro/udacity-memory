@@ -71,19 +71,71 @@ function hideCards() {
     }
 }
 
-function showCards() {
+// === control game === 
+// ====================
+
+function abortGame() {
+    // stop timer
+    stopTimer();
+
     for (i=0;i<gamePanelList.children.length;i++) {
         gamePanelList.children[i].classList.add("open");
         gamePanelList.children[i].classList.add("solved");
     }
+
+    document.querySelector('button.solve').setAttribute('style', "display: none;")
+    document.querySelector('button.start').textContent = 'restart'
+
+    gamePanelList.removeEventListener('click',openCard);
 }
 
-function resetCards() {
+function resetGame() {
+
+    document.querySelector('.modal').classList.add('hidden');
+
+    // clear global variable for next move
+    cardA = undefined;
+    cardB = undefined;
+
+    // reset cards
     for (i=0;i<gamePanelList.children.length;i++) {
         gamePanelList.children[i].classList.remove("solved");
         gamePanelList.children[i].classList.remove("success");
         gamePanelList.children[i].classList.remove("open");
     }
+    setTimeout(shuffleCards, 500);
+
+    // reset timer
+    timer_sec = 0;
+    success = 0;
+    counter = 0;
+    startTimer();
+
+    // show solve button
+    document.querySelector('button.solve').setAttribute('style', "display: inline;")
+    document.querySelector('button.start').textContent = 'restart'
+
+    // add event listener
+    gamePanelList.addEventListener('click',openCard);
+
+}
+
+function finishGame() {
+
+    // stop timer
+    stopTimer();
+
+    // show modal
+    const modal = document.querySelector('.modal');
+    modal.classList.remove("hidden");
+    modal.querySelector('.finaltime').textContent = displayTimer();
+
+    // remove solution button
+    document.querySelector('button.solve').setAttribute('style', "display: none;")
+
+    // remove event listener
+    gamePanelList.removeEventListener('click',openCard);
+
 }
 
 // timer
@@ -95,11 +147,11 @@ timer_sec = 0;
 function displayTimer() {
     const sec = "00" + timer_sec % 60;
     const min = "00" + Math.floor(timer_sec / 60);
-    document.querySelector('.timer').textContent = `${min.substr(min.length-2)}:${sec.substr(sec.length-2)}`;
+    return `${min.substr(min.length-2)}:${sec.substr(sec.length-2)}`;
 }
 
 function operateTimer() {
-    displayTimer();
+    document.querySelector('.timer').textContent = displayTimer();
     timer_sec++;
     timer = setTimeout(operateTimer, 1000);
 }
@@ -114,6 +166,7 @@ function startTimer() {
 function stopTimer() {
     clearTimeout(timer);
     timer_active = 0;
+    document.querySelector('.timer').textContent = displayTimer();
 }
 
 // handle game logic
@@ -126,7 +179,6 @@ function openCard(evt) {
         console.log('already open')
         return;
     }
-
     card.classList.add("open");
 
     // only call logic when two cards are selected
@@ -149,7 +201,7 @@ function handleSuccess(A, B) {
     document.querySelector('span.success').textContent = success + ' success';
     
     if (success == pairs) {
-        handleFinish();
+        finishGame();
     }
 
     A.classList.add('correct');
@@ -167,13 +219,6 @@ function handleError(A,B) {
         A.classList.remove('open');
         B.classList.remove('open');
     }, 2000)   
-}
-
-function handleFinish() {
-    stopTimer();
-    console.log('finished');
-    const modal = document.querySelector('.modal');
-    modal.setAttribute('style', "display: block;");
 }
 
 function checkCards() {
@@ -199,6 +244,8 @@ function checkCards() {
     }
 }
 
+// =================
+
 // initialize page
 createCards();
 
@@ -212,18 +259,9 @@ let success = 0;
 
 const gamePanelList = document.querySelector('.game-panel ul');
 const pairs = gamePanelList.children.length / 2;
-gamePanelList.addEventListener('click',function(evt) {
-    openCard(evt);
-});
 
 // event listener
-document.querySelector('button.shuffle').addEventListener('click', shuffleCards);
-
-document.querySelector('button.solve').addEventListener('click', showCards);
-
-document.querySelector('button.start').addEventListener('click', function () {
-    resetCards();
-    setTimeout(shuffleCards, 1000);
-    startTimer();
-});
+document.querySelector('button.solve').addEventListener('click', abortGame);
+document.querySelector('button.start').addEventListener('click', resetGame);
+document.querySelector('button.restart').addEventListener('click', resetGame);
 

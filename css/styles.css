@@ -5,10 +5,10 @@ body {
     font-family: 'Oswald', cursive;
 }
 .container {
-    max-width: 1200px;
+    max-width: 95%;
     margin: 0px auto;
     box-sizing: border-box;
-    padding: 40px 20px;
+    padding: 15px 20px;
 
 }
 
@@ -20,7 +20,7 @@ button, button:hover, button:focus {
     font-size: 16pt;
     text-transform: uppercase;
     border: 0;
-    margin: 0 10px;
+    margin: 10px 10px;
     cursor: pointer;
 }
 
@@ -28,7 +28,7 @@ button, button:hover, button:focus {
 /* === heading === */
 /* =============== */
 h1, h3 {
-    display: inline;
+    margin: 10px 0;
     color: rgb(5, 102, 141);
 }
 
@@ -37,7 +37,6 @@ h1 {
 }
 
 h3 {
-    margin-left: 1em;
     font-size: 32pt;
 }
 
@@ -46,8 +45,14 @@ h3 {
 
 .score-panel {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
 }
+
+.score-panel .status {
+    margin: 0 20px 20px 0;
+}
+
 .score-panel span {
     display: block;
 }
@@ -74,8 +79,8 @@ h3 {
 .card {
     display: block;
     color: #fff;
-    width:  250px;
-    height: 250px;
+    width:  22%;
+    height: 80px;
     margin-bottom: 40px;
     position: relative;
     perspective: 400px;
@@ -102,9 +107,8 @@ h3 {
     transform: rotateY(180deg);
     justify-content: center;
     align-items: center;
-    font-size: 300pt;
     cursor: pointer;
-    font-size: 30pt;
+    font-size: 22pt;
     display: flex;
 }
 
@@ -142,5 +146,60 @@ h3 {
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
     box-shadow: 8px 8px 26px -16px;
-    display: none;
+    transition-duration: 0.8s;
+}
+
+.modal.hidden {
+    top: -100%;
+}
+
+.modal .restart {
+    margin: 10px 0;
+}
+
+/* === responsive === */
+
+@media screen and (max-width: 431px) {
+    button {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
+@media screen and (min-width: 432px) {
+    .card {
+        height: 100px;
+    }
+    .card .front {
+        font-size: 30pt;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+    .card {
+        width: 140px;
+        height: 140px;
+    }
+    h1, h3 {
+        display: inline;
+    } 
+    h3 {
+        margin-left: 1em;
+    }
+    .card .front {
+        font-size: 40pt;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .container {
+        max-width: 980px;
+    }
+    .card {
+        width: 200px;
+        height: 200px;
+    }
 }

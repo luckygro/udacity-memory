@@ -19,11 +19,11 @@
             <div class="status">
                 <span class="moves">0 moves</span>
                 <span class="success">0 success</span>
-                <span class="timer">04:23</span>
+                <span class="timer">00:00</span>
             </div>
             <div class="control">
-                <button id="#shuffle" class="shuffle">shuffle</button>
-                <button id="#solve" class="solve">solve</button>
+                <!-- <button id="#shuffle" class="shuffle">shuffle</button> -->
+                <button id="#solve" class="solve">show solution</button>
                 <button id="#start" class="start">start</button>
             </div>
         </section>
@@ -71,10 +71,11 @@
 
         </section>
     
-        <section class="modal">
+        <section class="modal hidden">
             <h1>Congratulation!</h1>
             <p>You solved the game!</p>
-            <p>Your time: <span class="timer">04:23</span></p>
+            <p>Your time: <span class="finaltime">04:23</span></p>
+            <button id="#restart" class="restart">restart</button>
         </section>
         <!-- JS Script -->
         <script src="js/app.js"></script>
