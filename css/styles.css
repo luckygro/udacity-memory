@@ -1,0 +1,133 @@
+body {
+    background: #fff url(../img/bg.jpg);
+    background-size: cover;
+    background-position: 50%;
+    font-family: 'Oswald', cursive;
+}
+.container {
+    max-width: 1200px;
+    margin: 0px auto;
+    box-sizing: border-box;
+    padding: 40px 20px;
+
+}
+
+button, button:hover, button:focus {
+    padding: 10px 40px;
+    background-color: rgb(5, 102, 141);
+    color: #fff;
+    border-radius: 8px;
+    font-size: 16pt;
+    text-transform: uppercase;
+    border: 0;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+
+/* === heading === */
+/* =============== */
+h1, h3 {
+    display: inline;
+    color: rgb(5, 102, 141);
+}
+
+h1 {
+    font-size: 48pt;
+}
+
+h3 {
+    margin-left: 1em;
+    font-size: 32pt;
+}
+
+/* === score panel === */
+/* =================== */
+
+.score-panel {
+    display: flex;
+    justify-content: space-between;
+}
+.score-panel span {
+    display: block;
+}
+
+.control .shuffle, .control .solve {
+    background-color: #ccc;
+}
+
+/* === game panel === */
+/* ================== */
+
+.cards {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    height: 100%;
+    justify-content: space-between;
+
+}
+
+.card {
+    display: block;
+    color: #fff;
+    width:  250px;
+    height: 250px;
+    margin-bottom: 40px;
+    position: relative;
+    perspective: 400px;
+}
+
+.card div {
+    backface-visibility: hidden;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transition-duration: 0.7s;
+    border-radius: 8px;
+    box-shadow: 5px 5px 19px -4px #999;
+}
+
+/* use scene for scaling hover effect */
+.card .scene {
+    position: relative;
+    transition-duration: 0.3s;
+}
+
+.card .front {
+    background-color: rgb(5, 102, 141);
+    transform: rotateY(180deg);
+    justify-content: center;
+    align-items: center;
+    font-size: 300pt;
+    cursor: pointer;
+    font-size: 30pt;
+    display: flex;
+}
+
+.card .back {
+    background-color: rgb(119, 216, 255);
+    transform: rotateY(0);
+}
+
+.card.open .front {
+    transform: rotateY(0);
+}
+.card.open .back {
+    transform: rotateY(180deg);
+}
+
+.card:hover .scene {
+    transform: translateZ(30px);
+}
+
+.card.correct .front {
+    background-color: rgb(118, 148, 11);
+}
+
+.card.solved .front {
+    background-color:#ccc;
+}
