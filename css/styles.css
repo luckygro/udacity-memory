@@ -22,7 +22,7 @@ button, button:hover, button:focus, button:active, button:visited {
     border: 0;
     margin: 10px 10px;
     cursor: pointer;
-    transition-duration: background-color 0.3s;
+    transition-duration: 0.3s;
     box-shadow: none;
 }
 button:hover, button:focus, button:active {
@@ -61,7 +61,6 @@ h3 {
 .score-panel span {
     display: block;
 }
-
 
 .control .shuffle, .control .solve {
     background-color: #ccc;
