@@ -78,6 +78,47 @@ function showCards() {
     }
 }
 
+function resetCards() {
+    for (i=0;i<gamePanelList.children.length;i++) {
+        gamePanelList.children[i].classList.remove("solved");
+        gamePanelList.children[i].classList.remove("success");
+        gamePanelList.children[i].classList.remove("open");
+    }
+}
+
+// timer
+// =====
+
+let timer, timer_sec, timer_active;
+timer_sec = 0;
+
+function displayTimer() {
+    const sec = "00" + timer_sec % 60;
+    const min = "00" + Math.floor(timer_sec / 60);
+    document.querySelector('.timer').textContent = `${min.substr(min.length-2)}:${sec.substr(sec.length-2)}`;
+}
+
+function operateTimer() {
+    displayTimer();
+    timer_sec++;
+    timer = setTimeout(operateTimer, 1000);
+}
+
+function startTimer() {
+    if(!timer_active) {
+        timer_active = 1;
+        operateTimer();
+    }
+}
+
+function stopTimer() {
+    clearTimeout(timer);
+    timer_active = 0;
+}
+
+// handle game logic
+// =================
+
 function openCard(evt) {
     const card = evt.target.closest('li');
 
@@ -88,6 +129,7 @@ function openCard(evt) {
 
     card.classList.add("open");
 
+    // only call logic when two cards are selected
     if (cardA == undefined) {
         cardA = card;
     } else {
@@ -101,36 +143,63 @@ function incrementCounter() {
     document.querySelector('span.moves').textContent = counter + ' moves';
 }
 
+function handleSuccess(A, B) {
+    
+    success++;
+    document.querySelector('span.success').textContent = success + ' success';
+    
+    if (success == pairs) {
+        handleFinish();
+    }
+
+    A.classList.add('correct');
+    B.classList.add('correct');
+    setTimeout(function() {
+        A.classList.add('solved');
+        B.classList.add('solved');
+        A.classList.remove('correct');
+        B.classList.remove('correct');
+    }, 2000)  
+}
+
+function handleError(A,B) {
+    setTimeout(function() {
+        A.classList.remove('open');
+        B.classList.remove('open');
+    }, 2000)   
+}
+
+function handleFinish() {
+    stopTimer();
+    console.log('finished');
+    const modal = document.querySelector('.modal');
+    modal.setAttribute('style', "display: block;");
+}
+
 function checkCards() {
 
-    incrementCounter();
+    // store objects
     const tempA = cardA;
     const tempB = cardB;
+
+    // clear global variable for next move
     cardA = undefined;
     cardB = undefined;
+
+    incrementCounter();
+
+    // get values
     const valueA = tempA.attributes.value.value;
     const valueB = tempB.attributes.value.value;
 
     if (valueA == valueB) {
-        console.log('success')
-        success++;
-        tempA.classList.add('correct');
-        tempB.classList.add('correct');
-        setTimeout(function() {
-            tempA.classList.add('solved');
-            tempB.classList.add('solved');
-            tempA.classList.remove('correct');
-            tempB.classList.remove('correct');
-        }, 2000)   
+        handleSuccess(tempA, tempB);
     } else {
-        console.log('wrong')
-        setTimeout(function() {
-            tempA.classList.remove('open');
-            tempB.classList.remove('open');
-        }, 2000)   
+        handleError(tempA, tempB);        
     }
 }
 
+// initialize page
 createCards();
 
 // cache cards
@@ -142,24 +211,19 @@ let counter = 0;
 let success = 0;
 
 const gamePanelList = document.querySelector('.game-panel ul');
-const pairs = gamePanelList.children.length;
+const pairs = gamePanelList.children.length / 2;
 gamePanelList.addEventListener('click',function(evt) {
     openCard(evt);
 });
 
 // event listener
-document.querySelector('button.shuffle').addEventListener('click', function () {
-    console.log('The cards are shuffled');
-    shuffleCards();
-  });
+document.querySelector('button.shuffle').addEventListener('click', shuffleCards);
+
+document.querySelector('button.solve').addEventListener('click', showCards);
 
 document.querySelector('button.start').addEventListener('click', function () {
-    hideCards();
-    shuffleCards();
-});
-
-document.querySelector('button.solve').addEventListener('click', function () {
-    console.log('show the result');
-    showCards();
+    resetCards();
+    setTimeout(shuffleCards, 1000);
+    startTimer();
 });
 

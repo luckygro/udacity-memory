@@ -131,3 +131,16 @@ h3 {
 .card.solved .front {
     background-color:#ccc;
 }
+
+/* === modal === */
+/* ============= */
+.modal {
+    position: absolute;
+    background-color: #fff;
+    padding: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    box-shadow: 8px 8px 26px -16px;
+    display: none;
+}
