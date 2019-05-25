@@ -74,6 +74,25 @@ function hideCards() {
 // === control game === 
 // ====================
 
+function refreshStatus() {
+    document.querySelector('span.moves').textContent = counter + ' moves';
+    document.querySelector('span.success').textContent = success + ' success';
+
+    // star rating
+    const stars = document.querySelectorAll('.score-panel .rating i');
+    if (counter < 10) {
+        stars.forEach(function(star) {
+            star.classList.remove('inactive');
+        })
+    } else if (counter < 15) {
+        stars[2].classList.add("inactive");
+    } else if (counter < 20) {
+        stars[1].classList.add("inactive");
+    } else {
+        stars[0].classList.add("inactive");
+    }
+}
+
 function abortGame() {
     // stop timer
     stopTimer();
@@ -107,9 +126,11 @@ function resetGame() {
 
     // reset timer
     timer_sec = 0;
+    startTimer();
+
     success = 0;
     counter = 0;
-    startTimer();
+    refreshStatus();
 
     // show solve button
     document.querySelector('button.solve').setAttribute('style', "display: inline;")
@@ -135,6 +156,22 @@ function finishGame() {
 
     // remove event listener
     gamePanelList.removeEventListener('click',openCard);
+
+    // star rating
+    const stars = document.querySelectorAll('.modal .ratingfinal i');
+    stars.forEach(function(star) {
+        star.classList.remove('inactive');
+    })
+    if (counter < 15) {
+        stars[2].classList.add("inactive");
+    } else if (counter < 20) {
+        stars[2].classList.add("inactive");
+        stars[1].classList.add("inactive");
+    } else {
+        stars[2].classList.add("inactive");
+        stars[1].classList.add("inactive");
+        stars[0].classList.add("inactive");
+    }
 
 }
 
@@ -192,13 +229,13 @@ function openCard(evt) {
 
 function incrementCounter() {
     counter++;
-    document.querySelector('span.moves').textContent = counter + ' moves';
+    refreshStatus();
 }
 
 function handleSuccess(A, B) {
     
     success++;
-    document.querySelector('span.success').textContent = success + ' success';
+    refreshStatus();
     
     if (success == pairs) {
         finishGame();

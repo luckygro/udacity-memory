@@ -21,6 +21,12 @@
                 <span class="success">0 success</span>
                 <span class="timer">00:00</span>
             </div>
+            <div class="rating">
+                <span class="ratingtext">your rating:</span>
+                <i class="fa fa-star star inactive"></i>
+                <i class="fa fa-star star inactive"></i>
+                <i class="fa fa-star star inactive"></i>
+            </div>
             <div class="control">
                 <!-- <button id="#shuffle" class="shuffle">shuffle</button> -->
                 <button id="#solve" class="solve">show solution</button>
@@ -74,7 +80,14 @@
         <section class="modal hidden">
             <h1>Congratulation!</h1>
             <p>You solved the game!</p>
-            <p>Your time: <span class="finaltime">04:23</span></p>
+            <p>Your time: <span class="finaltime">00:00</span></p>
+            <p>Your rating:
+                <div class="ratingfinal">
+                    <i class="fa fa-star star inactive"></i>
+                    <i class="fa fa-star star inactive"></i>
+                    <i class="fa fa-star star inactive"></i>
+                </div>
+            </p>
             <button id="#restart" class="restart">restart</button>
         </section>
         <!-- JS Script -->

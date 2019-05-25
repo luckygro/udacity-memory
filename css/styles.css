@@ -12,7 +12,7 @@ body {
 
 }
 
-button, button:hover, button:focus {
+button, button:hover, button:focus, button:active, button:visited {
     padding: 10px 40px;
     background-color: rgb(5, 102, 141);
     color: #fff;
@@ -22,6 +22,11 @@ button, button:hover, button:focus {
     border: 0;
     margin: 10px 10px;
     cursor: pointer;
+    transition-duration: background-color 0.3s;
+    box-shadow: none;
+}
+button:hover, button:focus, button:active {
+    background-color: rgb(5, 83, 114);
 }
 
 
@@ -33,11 +38,11 @@ h1, h3 {
 }
 
 h1 {
-    font-size: 48pt;
+    font-size: 24pt;
 }
 
 h3 {
-    font-size: 32pt;
+    font-size: 16pt;
 }
 
 /* === score panel === */
@@ -60,6 +65,17 @@ h3 {
 .control .shuffle, .control .solve {
     background-color: #ccc;
 }
+.control .shuffle:hover, .control .shuffle:focus, .control .shuffle:active, .control .solve:hover, .control .solve:focus, .control .solve:active {
+    background-color: #bbb;
+}
+
+.rating i, .ratingfinal i {
+    color: rgb(5, 102, 141);
+}
+.rating i.inactive, .ratingfinal i.inactive {
+    color:#aaa;
+}
+
 
 /* === game panel === */
 /* ================== */
@@ -141,7 +157,7 @@ h3 {
 .modal {
     position: absolute;
     background-color: #fff;
-    padding: 100px;
+    padding: 60px;
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
@@ -156,6 +172,7 @@ h3 {
 .modal .restart {
     margin: 10px 0;
 }
+
 
 /* === responsive === */
 
@@ -185,12 +202,17 @@ h3 {
     }
     h1, h3 {
         display: inline;
+        font-size: 48pt;
     } 
     h3 {
         margin-left: 1em;
+        font-size: 32pt;
     }
     .card .front {
         font-size: 40pt;
+    }
+    .modal {
+        padding: 100px;
     }
 }
 
