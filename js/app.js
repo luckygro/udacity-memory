@@ -211,12 +211,12 @@ function openCard (evt) {
 }
 
 function incrementCounter () {
-  counter++
+  updateMoves()
   refreshStatus()
 }
 
 function handleSuccess (A, B) {
-  success++
+  updateSuccess()
   refreshStatus()
 
   if (success == pairs) {
@@ -239,7 +239,7 @@ function handleError (A, B) {
     A.classList.remove('open')
     B.classList.remove('open')
     gamePanelList.addEventListener('click', openCard)
-  }, 2000)
+  }, 1500)
 }
 
 function checkCards () {
@@ -274,8 +274,19 @@ let cardA
 let cardB
 
 // counter and success
-let counter = 0
-let success = 0
+function updateMoves () {
+  if (!counter) {
+    let counter = 0
+  }
+  counter++
+}
+
+function updateSuccess () {
+  if (!success) {
+    let success = 0
+  }
+  success++
+}
 
 const gamePanelList = document.querySelector('.game-panel ul')
 const pairs = gamePanelList.children.length / 2
