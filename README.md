@@ -20,4 +20,4 @@ If not, wait 'till cards flipped again and repeat clicking on cards.
 ## screenshot
 That's how it should look like:
 
-![screenshot udacity memory game](/img/screenshot.jpg)
+![screenshot udacity memory game](/img/screenshot.png)
