@@ -33,7 +33,7 @@ function createCards () {
   // create two cards for each element in cardsContent
   cardsContent.forEach(function (name) {
     // create two cards and append content
-    for (i = 0; i < 2; i++) {
+    for (let i = 0; i < 2; i++) {
       const newCard = document.createElement('li')
       newCard.className = 'card open'
       newCard.setAttribute('value', name)
@@ -59,7 +59,7 @@ function shuffleCards () {
   // shuffle order
   const indexList = Array.apply(null, { length: lengthList }).map(Number.call, Number)
   const orderList = shuffle(indexList)
-  for (i = 0; i < lengthList; i++) {
+  for (let i = 0; i < lengthList; i++) {
     gamePanelList.children[i].setAttribute('style', `order: ${orderList[i]};`)
   }
 }
@@ -77,12 +77,10 @@ function refreshStatus () {
     stars.forEach(function (star) {
       star.classList.remove('inactive')
     })
-  } else if (counter < 15) {
-    stars[2].classList.add('inactive')
   } else if (counter < 20) {
-    stars[1].classList.add('inactive')
+    stars[2].classList.add('inactive')
   } else {
-    stars[0].classList.add('inactive')
+    stars[1].classList.add('inactive')
   }
 }
 
@@ -90,7 +88,7 @@ function abortGame () {
   // stop timer
   stopTimer()
 
-  for (i = 0; i < gamePanelList.children.length; i++) {
+  for (let i = 0; i < gamePanelList.children.length; i++) {
     gamePanelList.children[i].classList.add('open')
     gamePanelList.children[i].classList.add('solved')
   }
@@ -109,7 +107,7 @@ function resetGame () {
   cardB = undefined
 
   // reset cards
-  for (i = 0; i < gamePanelList.children.length; i++) {
+  for (let i = 0; i < gamePanelList.children.length; i++) {
     gamePanelList.children[i].classList.remove('solved')
     gamePanelList.children[i].classList.remove('success')
     gamePanelList.children[i].classList.remove('open')
@@ -152,15 +150,11 @@ function finishGame () {
   stars.forEach(function (star) {
     star.classList.remove('inactive')
   })
-  if (counter < 15) {
+  if (counter < 20) {
     stars[2].classList.add('inactive')
-  } else if (counter < 20) {
-    stars[2].classList.add('inactive')
-    stars[1].classList.add('inactive')
   } else {
     stars[2].classList.add('inactive')
     stars[1].classList.add('inactive')
-    stars[0].classList.add('inactive')
   }
 }
 
@@ -240,9 +234,11 @@ function handleSuccess (A, B) {
 }
 
 function handleError (A, B) {
+  gamePanelList.removeEventListener('click', openCard)
   setTimeout(function () {
     A.classList.remove('open')
     B.classList.remove('open')
+    gamePanelList.addEventListener('click', openCard)
   }, 2000)
 }
 
